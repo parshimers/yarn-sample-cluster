@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+<property>
+  <name>hadoop.tmp.dir</name>
+  <value><%= scope.lookupvar('hadoop::params::hadoop_tmp_path') %></value>
+  <description>A base for other temporary directories.</description>
+</property>
+
+<% if scope.lookupvar('hadoop::params::qjm_ha_mode') == "no" %>
+
+<property>
+  <name>fs.default.name</name>
+  <value>hdfs://<%= scope.lookupvar('hadoop::params::master') %>:<%= scope.lookupvar('hadoop::params::hdfsport') %></value>
+  <description>The name of the default file system.  A URI whose
+  scheme and authority determine the FileSystem implementation.  The
+  uri's scheme determines the config property (fs.SCHEME.impl) naming
+  the FileSystem implementation class.  The uri's authority is used to
+  determine the host, port, etc. for a filesystem.</description>
+</property>
+<% end %>
+
+<% if scope.lookupvar('hadoop::params::kerberos_mode') == "yes" %>
+
+<property>   
+        <name>hadoop.security.authentication</name>   
+        <value>kerberos</value>   
+        <description>Set the authentication for the cluster. Valid values are: simple or kerberos.   
+        </description>  
+</property> 
+<property>
+        <name>hadoop.security.authorization</name>
+        <value>true</value>
+</property>
+<property>
+        <name>hadoop.rpc.protection</name>
+        <value>authentication</value>
+</property>
+
+<property>   
+        <name>hadoop.security.auth_to_local</name>   
+        <value>
+        RULE:[2:$1]([nsd]n)s/.*/<%= scope.lookupvar('hadoop::params::hdfs_user') %>/
+        RULE:[2:$1](http)s/.*/<%= scope.lookupvar('hadoop::params::hdfs_user') %>/
+        RULE:[2:$1](host)s/.*/<%= scope.lookupvar('hadoop::params::hdfs_user') %>/
+        RULE:[2:$1]([rn]m)s/.*/<%= scope.lookupvar('hadoop::params::yarn_user') %>/
+        RULE:[2:$1](jhs)s/.*/<%= scope.lookupvar('hadoop::params::mapred_user') %>/
+        DEFAULT
+        </value>   
+        <description>The mapping from Kerberos principal names to local OS user names. </description>
+</property> 
+
+<property>
+  <name>hadoop.proxyuser.hive.hosts</name>
+  <value>*</value>
+</property>
+
+<property>
+  <name>hadoop.proxyuser.hive.groups</name>
+  <value>*</value>
+</property>
+ 
+<% end %>
+
+
+<% if scope.lookupvar('hadoop::params::qjm_ha_mode') == "yes" %>
+
+<property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://<%= scope.lookupvar('hadoop::params::dfs_nameservices') %></value>
+</property>
+
+<property>
+    <name>ha.zookeeper.quorum</name>
+    <value><%= scope.lookupvar('hadoop::params::zookeeper_quorum').join(':2181,') %>:2181</value>
+</property>
+
+<property>
+    <name>ha.zookeeper.auth</name>
+    <value>@<%= scope.lookupvar('hadoop::params::hdfs_user_path') %>/zk-auth.txt</value>
+</property>
+<property>
+    <name>ha.zookeeper.acl</name>
+    <value>@<%= scope.lookupvar('hadoop::params::hdfs_user_path') %>/zk-acl.txt</value>
+</property>
+
+<% end %>
+
+</configuration>
