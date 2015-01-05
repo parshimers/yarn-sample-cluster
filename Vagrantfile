@@ -47,6 +47,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     sh.inline = "echo \"127.0.0.1 \t nc1\" > /etc/hosts"
     sh.privileged = true
    end
+   nc1.vm.provision :puppet do |puppet|
+     puppet.manifests_path = 'puppet/manifests'
+     puppet.manifest_file = 'site.pp'
+     puppet.module_path = 'puppet/modules'
+     puppet.options = "--verbose --debug"
+   end
    nc1.vm.provision :hostmanager
   end
 
