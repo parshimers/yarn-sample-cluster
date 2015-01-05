@@ -131,7 +131,7 @@ class hadoop {
  
     file {"${hadoop::params::hadoop_tmp_path}":
         ensure => "directory",
-        mode => "g=rwx,o=r",
+        mode => "g=rwx,o=rwx",
         owner => "${hadoop::params::hadoop_user}",
         group => "${hadoop::params::hadoop_group}",
         alias => "hadoop-tmp-dir",

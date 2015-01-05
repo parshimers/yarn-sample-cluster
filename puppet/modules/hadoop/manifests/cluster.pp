@@ -517,7 +517,7 @@ class hadoop::cluster::master($format_namenode = 'no', $launch_dfs = 'no', $laun
     if $launch_dfs == "yes" {
  
         exec { "Set /tmp mode":
-            command => "./hdfs dfs -chmod -R 1777 /tmp; ./hdfs dfs -chown -R ${hadoop::params::hdfs_user} /tmp; touch ${hadoop::params::hdfs_user_path}/tmp_init_done",
+            command => "touch ${hadoop::params::hdfs_user_path}/tmp_init_done",
             user => "${hadoop::params::hdfs_user}",
             cwd => "${hadoop::params::hadoop_base}/hadoop-${hadoop::params::version}/bin",
             creates => "${hadoop::params::hdfs_user_path}/tmp_init_done",

@@ -13,7 +13,7 @@ if versioncmp($::puppetversion,'3.6.1') >= 0 {
   }
 }
 
-node 'cc.ics.uci.edu' {
+node 'cc' {
   include java
   class { 'hadoop::cluster::master':
     format_namenode => 'yes',
@@ -23,7 +23,7 @@ node 'cc.ics.uci.edu' {
   }
 }
 
-node 'nc1.ics.uci.edu', 'nc2.ics.uci.edu' {
+node 'nc1', 'nc2' {
   include java
   include hadoop::cluster::slave
 }
