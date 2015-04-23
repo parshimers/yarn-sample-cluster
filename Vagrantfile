@@ -22,7 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 
   config.vm.define "nc2" do |nc2|
-	nc2.vm.box = "puppetlabs/centos-6.5-64-puppet"
+	nc2.vm.box = "puppetlabs/centos-6.6-64-puppet"
 	nc2.vm.hostname = "nc2.ics.uci.edu"
 	nc2.vm.network "private_network", ip: "10.10.0.4"
     nc2.hostmanager.aliases = %w(nc2.ics.uci.edu nc2)
@@ -39,7 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    nc2.vm.provision :hostmanager
   end
   config.vm.define "nc1" do |nc1|
-	nc1.vm.box = "puppetlabs/centos-6.5-64-puppet"
+	nc1.vm.box = "puppetlabs/centos-6.6-64-puppet"
 	nc1.vm.hostname = "nc1.ics.uci.edu"
 	nc1.vm.network "private_network", ip: "10.10.0.3"
     nc1.hostmanager.aliases = %w(nc1.ics.uci.edu nc1)
@@ -57,7 +57,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "cc" do |cc|
-	cc.vm.box = "puppetlabs/centos-6.5-64-puppet"
+	cc.vm.box = "puppetlabs/centos-6.6-64-puppet"
 	cc.vm.hostname = "cc.ics.uci.edu"
 	cc.vm.network "private_network", ip: "10.10.0.2"
     cc.hostmanager.aliases = %w(cc.ics.uci.edu cc)
