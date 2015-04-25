@@ -9,6 +9,10 @@
   <value>org.apache.hadoop.mapred.ShuffleHandler</value>
 </property>
 <property>
+  <name>yarn.nodemanager.vmem-check-enabled</name>
+  <value>false</value>
+</property>
+<property>
   <name>yarn.resourcemanager.resource-tracker.address</name>
   <value><%= scope.lookupvar('hadoop::params::resourcemanager') %>:<%= scope.lookupvar('hadoop::params::resource_tracker_port') %></value>
 </property>
